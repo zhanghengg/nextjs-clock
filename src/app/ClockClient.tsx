@@ -1,4 +1,5 @@
-import Head from 'next/head';
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 
 type Tick = {
@@ -29,7 +30,7 @@ function formatTick(now: Date): Tick {
   return { hh, mm, ss, dateLine, tz };
 }
 
-export default function Clock() {
+export function ClockClient() {
   const [mounted, setMounted] = useState(false);
   const [tick, setTick] = useState<Tick>(() => formatTick(new Date()));
 
@@ -57,112 +58,67 @@ export default function Clock() {
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Realtime Clock</title>
-        <meta name="description" content="A realtime clock with a crisp, kinetic UI." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <style>{css}</style>
-      </Head>
+    <main className="stage">
+      <div className="bg" aria-hidden="true">
+        <div className="grain" />
+        <div className="orb orbA" />
+        <div className="orb orbB" />
+        <div className="orb orbC" />
+        <div className="grid" />
+      </div>
 
-      <main className="stage">
-        <div className="bg" aria-hidden="true">
-          <div className="grain" />
-          <div className="orb orbA" />
-          <div className="orb orbB" />
-          <div className="orb orbC" />
-          <div className="grid" />
-        </div>
-
-        <section className="wrap" aria-label="Realtime clock">
-          <header className="header">
-            <div className="badge">
-              <span className={prefersReducedMotion ? '' : 'livePulse'} aria-hidden="true" />
-              <span className="badgeText">LIVE</span>
-            </div>
-            <div className="meta">
-              <div className="greet">{greeting}</div>
-              <div className="sub">
-                <span className="date">{mounted ? tick.dateLine : 'Loading…'}</span>
-                <span className="dot">·</span>
-                <span className="tz">{mounted ? tick.tz : ''}</span>
-              </div>
-            </div>
-          </header>
-
-          <div className={prefersReducedMotion ? 'card' : 'card floatIn'}>
-            <div className="time" role="timer" aria-live="polite">
-              <span className="hh">{mounted ? tick.hh : '--'}</span>
-              <span className={prefersReducedMotion ? 'sep' : 'sep blink'} aria-hidden="true">
-                :
-              </span>
-              <span className="mm">{mounted ? tick.mm : '--'}</span>
-              <span className={prefersReducedMotion ? 'sep' : 'sep blink'} aria-hidden="true">
-                :
-              </span>
-              <span className="ss">{mounted ? tick.ss : '--'}</span>
-            </div>
-
-            <div className="meter" aria-hidden="true">
-              <div className="meterBar" style={{ ['--p' as any]: `${Number(tick.ss) / 60}` }} />
-            </div>
-
-            <div className="footer">
-              <div className="hint">Updates every second</div>
-              <div className="chips" aria-hidden="true">
-                <span className="chip">Static Export</span>
-                <span className="chip">Mobile Ready</span>
-                <span className="chip">Kinetic UI</span>
-              </div>
+      <section className="wrap" aria-label="Realtime clock">
+        <header className="header">
+          <div className="badge">
+            <span className={prefersReducedMotion ? '' : 'livePulse'} aria-hidden="true" />
+            <span className="badgeText">LIVE</span>
+          </div>
+          <div className="meta">
+            <div className="greet">{greeting}</div>
+            <div className="sub">
+              <span className="date">{mounted ? tick.dateLine : 'Loading…'}</span>
+              <span className="dot">·</span>
+              <span className="tz">{mounted ? tick.tz : ''}</span>
             </div>
           </div>
+        </header>
 
-          <p className="fineprint">
-            Tip: add this tab to your home screen for a clean desk clock.
-          </p>
-        </section>
-      </main>
-    </>
+        <div className={prefersReducedMotion ? 'card' : 'card floatIn'}>
+          <div className="time" role="timer" aria-live="polite">
+            <span className="hh">{mounted ? tick.hh : '--'}</span>
+            <span className={prefersReducedMotion ? 'sep' : 'sep blink'} aria-hidden="true">
+              :
+            </span>
+            <span className="mm">{mounted ? tick.mm : '--'}</span>
+            <span className={prefersReducedMotion ? 'sep' : 'sep blink'} aria-hidden="true">
+              :
+            </span>
+            <span className="ss">{mounted ? tick.ss : '--'}</span>
+          </div>
+
+          <div className="meter" aria-hidden="true">
+            <div className="meterBar" style={{ ['--p' as any]: `${Number(tick.ss) / 60}` }} />
+          </div>
+
+          <div className="footer">
+            <div className="hint">Updates every second</div>
+            <div className="chips" aria-hidden="true">
+              <span className="chip">Static Export</span>
+              <span className="chip">Mobile Ready</span>
+              <span className="chip">Kinetic UI</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="fineprint">Tip: add this tab to your home screen for a clean desk clock.</p>
+      </section>
+
+      <style>{css}</style>
+    </main>
   );
 }
 
 const css = String.raw`
-  :root {
-    --bg0: #070813;
-    --bg1: #0b0e2a;
-    --ink: rgba(255, 255, 255, 0.92);
-    --muted: rgba(255, 255, 255, 0.68);
-    --muted2: rgba(255, 255, 255, 0.54);
-    --glass: rgba(255, 255, 255, 0.08);
-    --stroke: rgba(255, 255, 255, 0.14);
-    --shadow: rgba(0, 0, 0, 0.35);
-
-    --a: #66e3ff;
-    --b: #ff4fd8;
-    --c: #ffd36e;
-
-    --r: 22px;
-  }
-
-  * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: radial-gradient(1200px 800px at 20% 10%, rgba(102, 227, 255, 0.16), transparent 55%),
-                radial-gradient(1100px 900px at 80% 30%, rgba(255, 79, 216, 0.14), transparent 58%),
-                radial-gradient(900px 700px at 60% 90%, rgba(255, 211, 110, 0.12), transparent 55%),
-                linear-gradient(180deg, var(--bg0), var(--bg1));
-    color: var(--ink);
-    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    overflow-x: hidden;
-  }
-
   .stage {
     min-height: 100vh;
     display: grid;
