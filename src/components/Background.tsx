@@ -26,26 +26,26 @@ export function Background() {
 
       {/* Orbs */}
       <div
-        className="absolute rounded-full blur-[28px] opacity-55"
+        className="absolute rounded-full blur-[60px] opacity-70"
         style={{
-          width: 540, height: 540, left: -180, top: -190,
-          background: `radial-gradient(circle at 30% 30%, var(--orb-a), transparent 60%)`,
+          width: 650, height: 650, left: -160, top: -180,
+          background: `radial-gradient(circle at 30% 30%, var(--orb-a), transparent 65%)`,
           animation: 'drift-a 14s ease-in-out infinite',
         }}
       />
       <div
-        className="absolute rounded-full blur-[28px] opacity-55"
+        className="absolute rounded-full blur-[60px] opacity-70"
         style={{
-          width: 520, height: 520, right: -190, top: 120,
-          background: `radial-gradient(circle at 35% 35%, var(--orb-b), transparent 62%)`,
+          width: 620, height: 620, right: -160, top: 80,
+          background: `radial-gradient(circle at 35% 35%, var(--orb-b), transparent 65%)`,
           animation: 'drift-b 16s ease-in-out infinite',
         }}
       />
       <div
-        className="absolute rounded-full blur-[28px] opacity-55"
+        className="absolute rounded-full blur-[60px] opacity-65"
         style={{
-          width: 520, height: 520, left: '10%', bottom: -240,
-          background: `radial-gradient(circle at 35% 35%, var(--orb-c), transparent 62%)`,
+          width: 600, height: 600, left: '10%', bottom: -200,
+          background: `radial-gradient(circle at 35% 35%, var(--orb-c), transparent 65%)`,
           animation: 'drift-c 18s ease-in-out infinite',
         }}
       />
